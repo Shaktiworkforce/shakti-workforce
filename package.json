@@ -2,18 +2,11 @@
   "name": "shakti-workforce",
   "version": "1.0.0",
   "private": true,
-  "description": "Shakti Workforce Private Limited — full-stack monorepo (Next.js frontend + Express backend).",
+  "description": "Shakti Workforce Private Limited frontend site.",
   "scripts": {
-    "install:all": "npm --prefix frontend install && npm --prefix backend install",
+    "install:frontend": "npm --prefix frontend install",
     "dev:frontend": "npm --prefix frontend run dev",
-    "dev:backend": "npm --prefix backend run dev",
     "build:frontend": "npm --prefix frontend run build",
-    "build:backend": "npm --prefix backend run build",
-    "typecheck:frontend": "npm --prefix frontend run typecheck",
-    "typecheck:backend": "npm --prefix backend run typecheck",
-    "build:all": "npm --prefix backend run build && npm --prefix frontend run build"
-  },
-  "dependencies": {
-    "dotenv": "^17.4.2"
+    "typecheck:frontend": "npm --prefix frontend run typecheck"
   }
 }

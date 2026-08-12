@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
+import { CONTACT_WHATSAPP } from '@/lib/contactActions';
 
 export default function WhatsAppFloat() {
   const [visible, setVisible] = useState(true);
@@ -17,11 +18,10 @@ export default function WhatsAppFloat() {
     };
   }, []);
 
-  const phone = '8080217575';
   const message = encodeURIComponent(
     "Hello Shakti Workforce Private Limited, I'd like to know more about your services."
   );
-  const href = `https://wa.me/${phone}?text=${message}`;
+  const href = `https://wa.me/${CONTACT_WHATSAPP}?text=${message}`;
 
   return (
     <div

@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation';
 import {
   ArrowLeft,
   CheckCircle2,
-  Loader2,
   Building2,
   User,
   Mail,
@@ -29,7 +28,7 @@ import {
   ChevronDown,
   Layers,
 } from 'lucide-react';
-import { api, ApiRequestError } from '@/lib/api';
+import { buildMailtoUrl, buildWhatsAppUrl, formatInquiry } from '@/lib/contactActions';
 import { SERVICE_CATEGORIES } from '@/lib/servicesData';
 
 const serviceOptions = [
@@ -49,9 +48,9 @@ const serviceOptions = [
 
 export default function EmployerPage() {
   const router = useRouter();
-  const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [mailtoUrl, setMailtoUrl] = useState('');
   const [serviceCategory, setServiceCategory] = useState<string>('');
   const [serviceType, setServiceType] = useState<string>('');
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
@@ -62,7 +61,7 @@ export default function EmployerPage() {
     );
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
 
@@ -89,35 +88,27 @@ export default function EmployerPage() {
       ? Array.from(new Set([combinedService, ...selectedServices]))
       : [combinedService];
 
-    setSubmitting(true);
-    try {
-      await api.createEmployerRequest({
-        company_name: companyName,
-        contact_person: contactPerson,
-        email,
-        phone,
-        services_requested: servicesToSubmit,
-        service_category: cat,
-        service_type: stype,
-        number_of_personnel: personnel,
-        duration,
-        location,
-        message,
-      });
-      setSubmitted(true);
-      form.reset();
-      setSelectedServices([]);
-      setServiceCategory('');
-      setServiceType('');
-    } catch (err) {
-      setError(
-        err instanceof ApiRequestError && err.code !== 'network'
-          ? err.message
-          : 'Something went wrong. Please try again.'
-      );
-    } finally {
-      setSubmitting(false);
-    }
+    const body = formatInquiry([
+      ['Company', companyName],
+      ['Contact person', contactPerson],
+      ['Email', email],
+      ['Phone', phone],
+      ['Services requested', servicesToSubmit.join(', ')],
+      ['Service category', cat],
+      ['Service type', stype],
+      ['Personnel needed', personnel],
+      ['Duration', duration],
+      ['Location', location],
+      ['Additional details', message],
+    ]);
+
+    setMailtoUrl(buildMailtoUrl('Employer service request - Shakti Workforce', body));
+    setSubmitted(true);
+    form.reset();
+    setSelectedServices([]);
+    setServiceCategory('');
+    setServiceType('');
+    window.open(buildWhatsAppUrl(`Employer service request\n\n${body}`), '_blank', 'noopener,noreferrer');
   };
 
   if (submitted) {
@@ -129,9 +120,11 @@ export default function EmployerPage() {
           </div>
           <h1 className="text-2xl font-extrabold text-[#2563eb] mb-2">Request Submitted!</h1>
           <p className="text-gray-600 text-sm mb-6">
-            Thank you for your interest. Our team will review your requirements and contact you
-            shortly with a tailored proposal.
+            Your service request was prepared for WhatsApp. Our team will contact you shortly with next steps.
           </p>
+          <a href={mailtoUrl} className="w-full inline-flex justify-center py-2.5 px-4 rounded-xl border border-amber-500 text-amber-600 font-semibold hover:bg-amber-50 text-sm transition-colors mb-3">
+            Send by Email
+          </a>
           <button onClick={() => router.push('/')} className="btn-gold w-full justify-center">
             Back to Home
           </button>
@@ -295,16 +288,9 @@ export default function EmployerPage() {
 
             <button
               type="submit"
-              disabled={submitting}
-              className="btn-gold w-full justify-center disabled:opacity-60 disabled:cursor-not-allowed"
+              className="btn-gold w-full justify-center"
             >
-              {submitting ? (
-                <>
-                  <Loader2 size={16} className="animate-spin" /> Submitting...
-                </>
-              ) : (
-                <>Submit Request</>
-              )}
+              Send Request on WhatsApp
             </button>
           </form>
         </div>

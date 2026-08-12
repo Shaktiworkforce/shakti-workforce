@@ -5,7 +5,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import WhatsAppFloat from '@/components/WhatsAppFloat';
 import Link from 'next/link';
-import { api, ApiRequestError } from '@/lib/api';
+import { staticGalleryItems } from '@/lib/galleryData';
 import {
   Image as ImageIcon,
   ZoomIn,
@@ -18,7 +18,6 @@ import {
   PhoneCall,
   ArrowRight,
   Filter,
-  Loader2,
 } from 'lucide-react';
 
 interface GalleryItem {
@@ -32,9 +31,7 @@ interface GalleryItem {
 }
 
 export default function GalleryPage() {
-  const [galleryData, setGalleryData] = useState<GalleryItem[]>([]);
-  const [fetching, setFetching] = useState(true);
-  const [fetchError, setFetchError] = useState<string | null>(null);
+  const [galleryData] = useState<GalleryItem[]>(staticGalleryItems);
   const [selectedFilter, setSelectedFilter] = useState('all');
   const [activeModalIndex, setActiveModalIndex] = useState<number | null>(null);
   const [failedImages, setFailedImages] = useState<Record<string, boolean>>({});
@@ -68,31 +65,6 @@ export default function GalleryPage() {
       ]).entries()
     ).map(([slug, name]) => ({ name, slug })),
   ];
-
-  useEffect(() => {
-    async function load() {
-      setFetching(true);
-      setFetchError(null);
-      try {
-        const data = await api.listGallery();
-        const mapped = (data || []).map((item) => ({
-          id: item.id,
-          title: item.title,
-          category: item.category,
-          categorySlug: item.category_slug,
-          src: item.src,
-          alt: item.alt,
-          location: item.location,
-        }));
-        setGalleryData(mapped);
-      } catch (err) {
-        setFetchError('Failed to load gallery images.');
-      } finally {
-        setFetching(false);
-      }
-    }
-    load();
-  }, []);
 
   const filteredData =
     selectedFilter === 'all'
@@ -198,16 +170,7 @@ export default function GalleryPage() {
         {/* Gallery Grid */}
         <section className="py-12 lg:py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
-            {fetching ? (
-              <div className="flex flex-col items-center justify-center py-20 text-gray-500">
-                <Loader2 className="animate-spin text-amber-500 mb-3" size={32} />
-                <p className="text-sm font-bold">Loading gallery photos...</p>
-              </div>
-            ) : fetchError ? (
-              <div className="text-center py-20 text-red-600 font-bold">
-                {fetchError}
-              </div>
-            ) : filteredData.length === 0 ? (
+            {filteredData.length === 0 ? (
               <div className="text-center py-20 text-gray-500 font-bold">
                 No photos found in this category.
               </div>

@@ -8,7 +8,6 @@ import {
   FileText,
   Upload,
   CheckCircle2,
-  Loader2,
   User,
   Mail,
   Phone,
@@ -17,14 +16,14 @@ import {
   MessageSquare,
   X,
 } from 'lucide-react';
-import { api, ApiRequestError } from '@/lib/api';
+import { buildMailtoUrl, buildWhatsAppUrl, formatInquiry } from '@/lib/contactActions';
 
 export default function EmployeePage() {
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [mailtoUrl, setMailtoUrl] = useState('');
   const [fileName, setFileName] = useState<string | null>(null);
   const [fileError, setFileError] = useState<string | null>(null);
 
@@ -54,7 +53,7 @@ export default function EmployeePage() {
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
 
@@ -72,30 +71,22 @@ export default function EmployeePage() {
       return;
     }
 
-    const file = fileInputRef.current?.files?.[0];
-    if (!file) {
-      setFileError('Please attach your resume (PDF).');
-      return;
-    }
+    const body = formatInquiry([
+      ['Full name', fullName],
+      ['Email', email],
+      ['Phone', phone],
+      ['Position', position],
+      ['Experience', experience ? `${experience} years` : undefined],
+      ['Message', message],
+      ['Resume file selected', fileName || undefined],
+    ]);
+    const note = `${body}\n\nPlease attach the resume PDF in WhatsApp or reply to the email with the resume attached.`;
 
-    setSubmitting(true);
-    try {
-      await api.createEmployeeApplication(
-        { full_name: fullName, email, phone, position_applied_for: position, experience_years: experience, message },
-        file
-      );
-      setSubmitted(true);
-      form.reset();
-      clearFile();
-    } catch (err) {
-      setError(
-        err instanceof ApiRequestError && err.code !== 'network'
-          ? err.message
-          : 'Something went wrong. Please try again.'
-      );
-    } finally {
-      setSubmitting(false);
-    }
+    setMailtoUrl(buildMailtoUrl('Job application - Shakti Workforce', note));
+    setSubmitted(true);
+    form.reset();
+    clearFile();
+    window.open(buildWhatsAppUrl(`Job application\n\n${note}`), '_blank', 'noopener,noreferrer');
   };
 
   if (submitted) {
@@ -107,9 +98,12 @@ export default function EmployeePage() {
           </div>
           <h1 className="text-2xl font-extrabold text-[#2563eb] mb-2">Application Submitted!</h1>
           <p className="text-gray-600 text-sm mb-6">
-            Thank you for applying. Our team will review your resume and get in touch with you soon
-            regarding the next steps.
+            Your application details were prepared for WhatsApp. Please attach your resume PDF in
+            the WhatsApp chat or send it by email.
           </p>
+          <a href={mailtoUrl} className="w-full inline-flex justify-center py-2.5 px-4 rounded-xl border border-amber-500 text-amber-600 font-semibold hover:bg-amber-50 text-sm transition-colors mb-3">
+            Send by Email
+          </a>
           <button
             onClick={() => router.push('/')}
             className="btn-gold w-full justify-center"
@@ -172,7 +166,7 @@ export default function EmployeePage() {
 
             {/* Resume upload */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">Resume (PDF only, max 5 MB) *</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">Resume (PDF only, max 5 MB)</label>
               <div
                 className={`relative border-2 border-dashed rounded-xl transition-colors cursor-pointer ${fileError ? 'border-red-300 bg-red-50/30' : fileName ? 'border-amber-300 bg-amber-50/30' : 'border-gray-200 hover:border-amber-300 hover:bg-amber-50/20'
                   }`}
@@ -204,8 +198,8 @@ export default function EmployeePage() {
                 ) : (
                   <div className="flex flex-col items-center justify-center py-8 px-4 text-center">
                     <Upload className="text-gray-400 mb-2" size={28} />
-                    <p className="text-sm text-gray-600 font-medium">Click to upload your resume</p>
-                    <p className="text-xs text-gray-400 mt-1">PDF files only, up to 5 MB</p>
+                    <p className="text-sm text-gray-600 font-medium">Select your resume file name</p>
+                    <p className="text-xs text-gray-400 mt-1">Attach the PDF in WhatsApp or email after sending</p>
                   </div>
                 )}
               </div>
@@ -220,18 +214,9 @@ export default function EmployeePage() {
 
             <button
               type="submit"
-              disabled={submitting}
-              className="btn-gold w-full justify-center disabled:opacity-60 disabled:cursor-not-allowed"
+              className="btn-gold w-full justify-center"
             >
-              {submitting ? (
-                <>
-                  <Loader2 size={16} className="animate-spin" /> Submitting...
-                </>
-              ) : (
-                <>
-                  Submit Application <Upload size={16} />
-                </>
-              )}
+              Send Application on WhatsApp <Upload size={16} />
             </button>
           </form>
         </div>

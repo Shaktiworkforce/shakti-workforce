@@ -8,7 +8,6 @@ import {
   FileText,
   Upload,
   CheckCircle2,
-  Loader2,
   User,
   Mail,
   Phone,
@@ -33,7 +32,7 @@ import {
   UserCheck,
   Layers,
 } from 'lucide-react';
-import { api, ApiRequestError } from '@/lib/api';
+import { buildMailtoUrl, buildWhatsAppUrl, formatInquiry } from '@/lib/contactActions';
 import { SERVICE_CATEGORIES } from '@/lib/servicesData';
 
 const serviceOptions = [
@@ -68,18 +67,18 @@ function ApplyPortal() {
 
   // Employee Form State
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [empSubmitting, setEmpSubmitting] = useState(false);
   const [empSubmitted, setEmpSubmitted] = useState(false);
   const [empError, setEmpError] = useState<string | null>(null);
+  const [empMailtoUrl, setEmpMailtoUrl] = useState('');
   const [fileName, setFileName] = useState<string | null>(null);
   const [fileError, setFileError] = useState<string | null>(null);
   const [positionApplied, setPositionApplied] = useState('');
   const [isCustomPosition, setIsCustomPosition] = useState(false);
 
   // Employer Form State
-  const [emprSubmitting, setEmprSubmitting] = useState(false);
   const [emprSubmitted, setEmprSubmitted] = useState(false);
   const [emprError, setEmprError] = useState<string | null>(null);
+  const [emprMailtoUrl, setEmprMailtoUrl] = useState('');
   const [serviceCategory, setServiceCategory] = useState<string>('');
   const [serviceType, setServiceType] = useState<string>('');
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
@@ -111,7 +110,7 @@ function ApplyPortal() {
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
-  const handleEmployeeSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleEmployeeSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setEmpError(null);
 
@@ -137,32 +136,25 @@ function ApplyPortal() {
       return;
     }
 
-    const file = fileInputRef.current?.files?.[0];
-    if (!file) {
-      setFileError('Please attach your resume (PDF).');
-      return;
-    }
+    const body = formatInquiry([
+      ['Full name', fullName],
+      ['Phone', phone],
+      ['Email', email],
+      ['Position', position],
+      ['Experience', experience ? `${experience} years` : undefined],
+      ['Preferred location', preferredLocation],
+      ['Message', message],
+      ['Resume file selected', fileName || undefined],
+    ]);
+    const note = `${body}\n\nPlease attach the resume PDF in WhatsApp or reply to the email with the resume attached.`;
 
-    setEmpSubmitting(true);
-    try {
-      await api.createEmployeeApplication(
-        { full_name: fullName, email, phone, position_applied_for: position, experience_years: experience, preferred_location: preferredLocation, message },
-        file
-      );
-      setEmpSubmitted(true);
-      setPositionApplied('');
-      setIsCustomPosition(false);
-      form.reset();
-      clearFile();
-    } catch (err) {
-      setEmpError(
-        err instanceof ApiRequestError && err.code !== 'network'
-          ? err.message
-          : 'Something went wrong. Please try again.'
-      );
-    } finally {
-      setEmpSubmitting(false);
-    }
+    setEmpMailtoUrl(buildMailtoUrl('Job application - Shakti Workforce', note));
+    setEmpSubmitted(true);
+    setPositionApplied('');
+    setIsCustomPosition(false);
+    form.reset();
+    clearFile();
+    window.open(buildWhatsAppUrl(`Job application\n\n${note}`), '_blank', 'noopener,noreferrer');
   };
 
   // Employer Handlers
@@ -172,7 +164,7 @@ function ApplyPortal() {
     );
   };
 
-  const handleEmployerSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleEmployerSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setEmprError(null);
 
@@ -200,35 +192,27 @@ function ApplyPortal() {
       ? Array.from(new Set([combinedService, ...selectedServices]))
       : [combinedService];
 
-    setEmprSubmitting(true);
-    try {
-      await api.createEmployerRequest({
-        company_name: companyName,
-        contact_person: contactPerson,
-        email,
-        phone,
-        services_requested: servicesToSubmit,
-        service_category: cat,
-        service_type: stype,
-        number_of_personnel: personnel,
-        duration,
-        location,
-        message,
-      });
-      setEmprSubmitted(true);
-      form.reset();
-      setSelectedServices([]);
-      setServiceCategory('');
-      setServiceType('');
-    } catch (err) {
-      setEmprError(
-        err instanceof ApiRequestError && err.code !== 'network'
-          ? err.message
-          : 'Something went wrong. Please try again.'
-      );
-    } finally {
-      setEmprSubmitting(false);
-    }
+    const body = formatInquiry([
+      ['Company', companyName],
+      ['Contact person', contactPerson],
+      ['Phone', phone],
+      ['Email', email],
+      ['Services requested', servicesToSubmit.join(', ')],
+      ['Service category', cat],
+      ['Service type', stype],
+      ['Personnel required', personnel],
+      ['Duration', duration],
+      ['Location', location],
+      ['Additional details', message],
+    ]);
+
+    setEmprMailtoUrl(buildMailtoUrl('Employer service request - Shakti Workforce', body));
+    setEmprSubmitted(true);
+    form.reset();
+    setSelectedServices([]);
+    setServiceCategory('');
+    setServiceType('');
+    window.open(buildWhatsAppUrl(`Employer service request\n\n${body}`), '_blank', 'noopener,noreferrer');
   };
 
   const isSubmitted = portalType === 'employee' ? empSubmitted : emprSubmitted;
@@ -245,10 +229,16 @@ function ApplyPortal() {
           </h1>
           <p className="text-gray-600 text-sm mb-6">
             {portalType === 'employee'
-              ? 'Thank you for applying. Our team will review your resume and get in touch with you soon regarding the next steps.'
-              : "Thank you for your interest. Our team will review your requirements and contact you shortly with a tailored proposal."}
+              ? 'Your application details were prepared for WhatsApp. Please attach your resume PDF in the WhatsApp chat or send it by email.'
+              : "Your service request was prepared for WhatsApp. Our team will contact you shortly with next steps."}
           </p>
           <div className="space-y-3">
+            <a
+              href={portalType === 'employee' ? empMailtoUrl : emprMailtoUrl}
+              className="w-full inline-flex justify-center py-2.5 px-4 rounded-xl border border-amber-500 text-amber-600 font-semibold hover:bg-amber-50 text-sm transition-colors"
+            >
+              Send by Email
+            </a>
             <button
               onClick={() => {
                 if (portalType === 'employee') setEmpSubmitted(false);
@@ -416,7 +406,7 @@ function ApplyPortal() {
 
               {/* Resume upload */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">Resume (PDF only, max 5 MB) *</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">Resume (PDF only, max 5 MB)</label>
                 <div
                   className={`relative border-2 border-dashed rounded-xl transition-colors cursor-pointer ${fileError ? 'border-red-300 bg-red-50/30' : fileName ? 'border-amber-300 bg-amber-50/30' : 'border-gray-200 hover:border-amber-300 hover:bg-amber-50/20'
                     }`}
@@ -448,8 +438,8 @@ function ApplyPortal() {
                   ) : (
                     <div className="flex flex-col items-center justify-center py-8 px-4 text-center">
                       <Upload className="text-gray-400 mb-2" size={28} />
-                      <p className="text-sm text-gray-600 font-medium">Click to upload your resume *</p>
-                      <p className="text-xs text-gray-400 mt-1">PDF files only, up to 5 MB</p>
+                      <p className="text-sm text-gray-600 font-medium">Select your resume file name</p>
+                      <p className="text-xs text-gray-400 mt-1">Attach the PDF in WhatsApp or email after sending</p>
                     </div>
                   )}
                 </div>
@@ -464,18 +454,9 @@ function ApplyPortal() {
 
               <button
                 type="submit"
-                disabled={empSubmitting}
-                className="btn-gold w-full justify-center disabled:opacity-60 disabled:cursor-not-allowed"
+                className="btn-gold w-full justify-center"
               >
-                {empSubmitting ? (
-                  <>
-                    <Loader2 size={16} className="animate-spin" /> Submitting...
-                  </>
-                ) : (
-                  <>
-                    Submit Application <Upload size={16} />
-                  </>
-                )}
+                Send Application on WhatsApp <Upload size={16} />
               </button>
             </form>
           ) : (
@@ -617,16 +598,9 @@ function ApplyPortal() {
 
               <button
                 type="submit"
-                disabled={emprSubmitting}
-                className="btn-gold w-full justify-center disabled:opacity-60 disabled:cursor-not-allowed"
+                className="btn-gold w-full justify-center"
               >
-                {emprSubmitting ? (
-                  <>
-                    <Loader2 size={16} className="animate-spin" /> Submitting...
-                  </>
-                ) : (
-                  <>Submit Request</>
-                )}
+                Send Request on WhatsApp
               </button>
             </form>
           )}

@@ -1,17 +1,16 @@
 'use client';
 
 import { useState } from 'react';
-import { MapPin, Phone, Mail, Clock, Send, User, MessageSquare, CheckCircle2, Loader2 } from 'lucide-react';
-import { api, ApiRequestError } from '@/lib/api';
+import { MapPin, Phone, Mail, Clock, Send, User, MessageSquare, CheckCircle2 } from 'lucide-react';
+import { buildMailtoUrl, buildWhatsAppUrl, CONTACT_EMAIL, CONTACT_PHONE, formatInquiry } from '@/lib/contactActions';
 
 export default function Contact() {
-  const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [mailtoUrl, setMailtoUrl] = useState('');
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitting(true);
     setError(null);
 
     const form = e.currentTarget;
@@ -23,24 +22,23 @@ export default function Contact() {
 
     if (!name || !phone || !email || !message) {
       setError('Please fill in all fields.');
-      setSubmitting(false);
       return;
     }
 
-    try {
-      await api.createSubmission({ name, email, phone, message });
-      setSubmitted(true);
-      form.reset();
-      setTimeout(() => setSubmitted(false), 5000);
-    } catch (err) {
-      setError(
-        err instanceof ApiRequestError && err.code !== 'network'
-          ? err.message
-          : 'Something went wrong. Please try again or call us directly.'
-      );
-    } finally {
-      setSubmitting(false);
-    }
+    const body = formatInquiry([
+      ['Name', name],
+      ['Phone', phone],
+      ['Email', email],
+      ['Message', message],
+    ]);
+    const whatsappMessage = `New website inquiry\n\n${body}`;
+    const emailUrl = buildMailtoUrl('Website inquiry - Shakti Workforce', body);
+
+    setMailtoUrl(emailUrl);
+    setSubmitted(true);
+    form.reset();
+    window.open(buildWhatsAppUrl(whatsappMessage), '_blank', 'noopener,noreferrer');
+    setTimeout(() => setSubmitted(false), 8000);
   };
 
   return (
@@ -87,8 +85,8 @@ export default function Contact() {
                 </div>
                 <div>
                   <h4 className="font-semibold text-amber-400 mb-1 text-sm uppercase tracking-wider">Helpline</h4>
-                  <a href="tel:8080217575" className="text-gray-200 text-sm hover:text-amber-400 transition-colors">
-                    8080217575
+                  <a href={`tel:${CONTACT_PHONE}`} className="text-gray-200 text-sm hover:text-amber-400 transition-colors">
+                    {CONTACT_PHONE}
                   </a>
                 </div>
               </div>
@@ -100,10 +98,10 @@ export default function Contact() {
                 <div>
                   <h4 className="font-semibold text-amber-400 mb-1 text-sm uppercase tracking-wider">Email</h4>
                   <a
-                    href="mailto:Info@shaktiworkforce.com"
+                    href={`mailto:${CONTACT_EMAIL}`}
                     className="text-gray-200 text-sm hover:text-amber-400 transition-colors break-all"
                   >
-                    Info@shaktiworkforce.com
+                    {CONTACT_EMAIL}
                   </a>
                 </div>
               </div>
@@ -191,27 +189,22 @@ export default function Contact() {
 
               <button
                 type="submit"
-                disabled={submitting}
-                className="btn-gold w-full justify-center disabled:opacity-60 disabled:cursor-not-allowed"
+                className="btn-gold w-full justify-center"
               >
-                {submitting ? (
+                {submitted ? (
                   <>
-                    <Loader2 size={16} className="animate-spin" /> Sending...
-                  </>
-                ) : submitted ? (
-                  <>
-                    <CheckCircle2 size={16} /> Message Sent!
+                    <CheckCircle2 size={16} /> WhatsApp Opened
                   </>
                 ) : (
                   <>
-                    Send Message <Send size={16} />
+                    Send on WhatsApp <Send size={16} />
                   </>
                 )}
               </button>
 
               {submitted && (
                 <p className="text-green-600 text-sm text-center">
-                  Thank you! We'll get back to you shortly.
+                  You can also <a href={mailtoUrl} className="font-semibold underline">send this inquiry by email</a>.
                 </p>
               )}
             </form>
