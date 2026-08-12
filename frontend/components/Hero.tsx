@@ -1,0 +1,109 @@
+'use client';
+
+import Link from 'next/link';
+import { Shield, Users2, Briefcase, ArrowRight } from 'lucide-react';
+
+export default function Hero() {
+  return (
+    <section
+      id="home"
+      className="relative min-h-[90vh] md:min-h-screen flex items-center pt-24 sm:pt-28 pb-16 sm:pb-20 overflow-hidden bg-[#1e40af]"
+    >
+      {/* Desktop background image (Hidden on mobile) */}
+      <div className="hidden md:block absolute inset-0 z-0 overflow-hidden">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/hero.png"
+          alt="Shakti Workforce security and workforce team"
+          className="w-full h-full object-cover md:object-center lg:object-right transition-all duration-500"
+        />
+        {/* Desktop Overlay Gradient */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1e40af] via-[#1e40af]/85 via-50% to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#1e40af] via-transparent to-transparent opacity-40"></div>
+      </div>
+
+      {/* Decorative background glow */}
+      <div className="absolute top-1/4 left-10 w-60 sm:w-80 h-60 sm:h-80 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 w-full">
+        <div className="max-w-2xl text-left">
+
+          {/* Mobile Only: 16:9 Hero Image displayed FIRST */}
+          <div className="block md:hidden relative w-full aspect-[16/9] rounded-2xl overflow-hidden shadow-2xl border border-amber-400/30 mb-6 group">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/hero.png"
+              alt="Shakti Workforce security and workforce team"
+              className="w-full h-full object-cover object-center rounded-2xl"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#1e40af]/50 via-transparent to-transparent pointer-events-none"></div>
+          </div>
+
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-amber-500/30 rounded-full px-3.5 sm:px-4 py-1.5 mb-5 sm:mb-6 max-w-full">
+            <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse shrink-0"></span>
+            <span className="text-amber-300 text-[10px] sm:text-xs font-bold tracking-wider uppercase truncate">
+              PSARA LICENSED & ISO 9001:2015 CERTIFIED
+            </span>
+          </div>
+
+          {/* Responsive Heading */}
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[52px] font-extrabold text-white leading-[1.18] sm:leading-[1.15] mb-4 sm:mb-6 tracking-tight">
+            Your Trusted Partner for{' '}
+            <span className="text-amber-400 font-extrabold block sm:inline">
+              Security, Manpower &
+            </span>{' '}
+            Business Solutions
+          </h1>
+
+          {/* Responsive Subtitle */}
+          <p className="text-sm sm:text-base md:text-lg text-gray-200 mb-6 sm:mb-8 leading-relaxed max-w-xl">
+            Shakti Workforce Private Limited delivers 100% verified security guarding, qualified staffing, housekeeping, and operational support built on integrity, discipline, and trust.
+          </p>
+
+          {/* Action buttons - Side by side in one line on mobile without overflow */}
+          <div className="flex flex-row items-center gap-2 sm:gap-4 mb-8 sm:mb-12 w-full max-w-full">
+            <Link
+              href="/contact#contact"
+              className="btn-gold flex-1 min-w-0 justify-center font-bold !px-2.5 sm:!px-7 py-2.5 sm:py-3.5 rounded-full inline-flex items-center gap-1 sm:gap-2 shadow-lg hover:scale-105 transition-transform text-xs sm:text-base text-center"
+            >
+              <span className="truncate">Connect With Us</span>
+              <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
+            </Link>
+            <Link
+              href="/services/security-housekeeping"
+              className="btn-navy-outline flex-1 min-w-0 justify-center !border-white/40 !text-white hover:!bg-white/10 font-bold !px-2.5 sm:!px-7 py-2.5 sm:py-3.5 rounded-full inline-flex items-center gap-1 sm:gap-2 text-xs sm:text-base text-center"
+            >
+              <span className="truncate">Explore Services</span>
+            </Link>
+          </div>
+
+          {/* Responsive Feature pills grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3 max-w-2xl">
+            {[
+              { icon: Shield, label: 'PSARA Trained Guards' },
+              { icon: Users2, label: 'Verified Staffing' },
+              { icon: Briefcase, label: '24/7 Rapid Response' },
+            ].map((item) => (
+              <div
+                key={item.label}
+                className="flex items-center gap-3 bg-white/10 backdrop-blur-md border border-white/15 rounded-xl px-3.5 sm:px-4 py-2.5 sm:py-3 shadow-sm hover:border-amber-400/40 transition-colors"
+              >
+                <item.icon className="text-amber-400 shrink-0" size={18} />
+                <span className="text-white text-xs font-semibold">{item.label}</span>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </div>
+
+      {/* Bottom wave divider */}
+      <div className="absolute bottom-0 left-0 right-0 z-10">
+        <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
+          <path d="M0 80L60 70C120 60 240 40 360 35C480 30 600 40 720 45C840 50 960 50 1080 45C1200 40 1320 30 1380 25L1440 20V80H0Z" fill="white" />
+        </svg>
+      </div>
+    </section>
+  );
+}
