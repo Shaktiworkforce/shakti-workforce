@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Shield, Users2, Briefcase, ArrowRight } from 'lucide-react';
+import { Shield, ShieldCheck, Users2, Briefcase, ArrowRight } from 'lucide-react';
 
 export default function Hero() {
   return (
@@ -41,13 +41,18 @@ export default function Hero() {
 
           {/* Badge */}
           <div className="inline-flex items-center gap-2.5 bg-white/10 backdrop-blur-md border border-amber-500/30 rounded-2xl px-3.5 sm:px-4 py-2 mb-5 sm:mb-6 max-w-full">
-            <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse shrink-0"></span>
-            <span className="flex flex-col leading-tight">
-              <span className="text-amber-300 text-[10px] sm:text-xs font-extrabold tracking-wider uppercase">
-                CLRA LICENSED
+            <span className="flex flex-col gap-1.5 leading-tight">
+              <span className="flex items-center gap-2">
+                <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse shrink-0"></span>
+                <span className="text-amber-300 text-[10px] sm:text-xs font-extrabold tracking-wider uppercase">
+                  CLRA LICENSED
+                </span>
               </span>
-              <span className="text-amber-300/90 text-[9px] sm:text-[11px] font-bold tracking-wider uppercase truncate">
-                PSARA LICENSED & ISO 9001:2015 CERTIFIED
+              <span className="flex items-center gap-2">
+                <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse shrink-0"></span>
+                <span className="text-amber-300/90 text-[9px] sm:text-[11px] font-bold tracking-wider uppercase truncate">
+                  PSARA LICENSED & ISO 9001:2015 CERTIFIED
+                </span>
               </span>
             </span>
           </div>
@@ -86,11 +91,12 @@ export default function Hero() {
           </div>
 
           {/* Responsive Feature pills grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3 max-w-2xl">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3 max-w-2xl">
             {[
               { icon: Shield, label: 'PSARA Trained Guards' },
               { icon: Users2, label: 'Verified Staffing' },
               { icon: Briefcase, label: '24/7 Rapid Response' },
+              { icon: ShieldCheck, label: 'CLRA Licensed' },
             ].map((item) => (
               <div
                 key={item.label}
