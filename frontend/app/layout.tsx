@@ -5,9 +5,10 @@ import { Inter } from 'next/font/google';
 const inter = Inter({ subsets: ['latin'], weight: ['300', '400', '500', '600', '700', '800'] });
 
 export const metadata: Metadata = {
-  title: 'Shakti Workforce Private Limited | Security, Manpower & Business Solutions',
+  title: 'Shakti Workforce Private Limited | All Manpower Services Provider',
   description:
-    'Shakti Workforce Private Limited – Your trusted partner for security, manpower, housekeeping, event management, training, and business solutions across India.',
+    'Shakti Workforce Private Limited – Your trusted all manpower service provider for skilled, non-skilled, industrial, housekeeping, logistics, contract, and security workforce services across India.',
+  keywords: ['manpower', 'security', '24/7 rapid response'],
   icons: {
     icon: '/logo.png',
     shortcut: '/logo.png',

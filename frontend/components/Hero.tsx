@@ -40,10 +40,15 @@ export default function Hero() {
           </div>
 
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-amber-500/30 rounded-full px-3.5 sm:px-4 py-1.5 mb-5 sm:mb-6 max-w-full">
+          <div className="inline-flex items-center gap-2.5 bg-white/10 backdrop-blur-md border border-amber-500/30 rounded-2xl px-3.5 sm:px-4 py-2 mb-5 sm:mb-6 max-w-full">
             <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse shrink-0"></span>
-            <span className="text-amber-300 text-[10px] sm:text-xs font-bold tracking-wider uppercase truncate">
-              PSARA LICENSED & ISO 9001:2015 CERTIFIED
+            <span className="flex flex-col leading-tight">
+              <span className="text-amber-300 text-[10px] sm:text-xs font-extrabold tracking-wider uppercase">
+                CLRA LICENSED
+              </span>
+              <span className="text-amber-300/90 text-[9px] sm:text-[11px] font-bold tracking-wider uppercase truncate">
+                PSARA LICENSED & ISO 9001:2015 CERTIFIED
+              </span>
             </span>
           </div>
 
@@ -51,14 +56,16 @@ export default function Hero() {
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[52px] font-extrabold text-white leading-[1.18] sm:leading-[1.15] mb-4 sm:mb-6 tracking-tight">
             Your Trusted Partner for{' '}
             <span className="text-amber-400 font-extrabold block sm:inline">
-              Security, Manpower &
+              Manpower, Security &
             </span>{' '}
-            Business Solutions
+              Workforce Solutions
           </h1>
 
           {/* Responsive Subtitle */}
           <p className="text-sm sm:text-base md:text-lg text-gray-200 mb-6 sm:mb-8 leading-relaxed max-w-xl">
-            Shakti Workforce Private Limited delivers 100% verified security guarding, qualified staffing, housekeeping, and operational support built on integrity, discipline, and trust.
+            Shakti Workforce Private Limited delivers 100% verified security guarding, qualified{' '}
+            <span className="text-amber-400 font-semibold">manpower</span>, housekeeping, and operational
+            support built on integrity, discipline, and trust.
           </p>
 
           {/* Action buttons - Side by side in one line on mobile without overflow */}
@@ -71,7 +78,7 @@ export default function Hero() {
               <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
             </Link>
             <Link
-              href="/services/security-housekeeping"
+              href="/services"
               className="btn-navy-outline flex-1 min-w-0 justify-center !border-white/40 !text-white hover:!bg-white/10 font-bold !px-2.5 sm:!px-7 py-2.5 sm:py-3.5 rounded-full inline-flex items-center gap-1 sm:gap-2 text-xs sm:text-base text-center"
             >
               <span className="truncate">Explore Services</span>

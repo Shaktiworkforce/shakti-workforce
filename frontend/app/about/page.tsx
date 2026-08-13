@@ -72,7 +72,7 @@ export default function AboutPage() {
                   Delivering Uncompromising Security & Comprehensive Manpower Solutions
                 </h2>
                 <p className="text-gray-600 text-base leading-relaxed mb-4">
-                  Shakti Workforce Private Limited was built on the core foundation of discipline, integrity, and proactive execution. Designed to bridge the gap between demanding corporate requirements and reliable ground manpower, our organization offers end-to-end security guarding, corporate staffing, housekeeping, event security, and specialized skill development.
+                  Shakti Workforce Private Limited was built on the core foundation of discipline, integrity, and proactive execution. Designed to bridge the gap between demanding corporate requirements and reliable ground manpower, our organization provides skilled, non-skilled, industrial, housekeeping, logistics, contract, and security workforce services.
                 </p>
                 <p className="text-gray-600 text-base leading-relaxed mb-6">
                   Like India’s finest security firms, we strictly adhere to statutory governance, PSARA guidelines, and quality standards. Our personnel undergo intense physical, tactical, and behavioral training before deployment, ensuring your assets, premises, and personnel remain protected 24 hours a day, 365 days a year.

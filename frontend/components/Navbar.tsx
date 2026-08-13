@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { ChevronDown, Menu, X } from 'lucide-react';
 
 type NavChildLink = {
@@ -22,68 +22,28 @@ const navLinks: NavLink[] = [
   { label: 'About Us', href: '/about' },
   {
     label: 'Services',
-    href: '/services/security-housekeeping',
+    href: '/services',
     children: [
-      {
-        label: '1. Private Security & Guarding Services',
-        href: '/services/security-housekeeping#security',
-        subtitle: 'Page 1 - PSARA Guarding & Bouncers',
-      },
-      {
-        label: '2. Housekeeping, Cleaning & Hospitality',
-        href: '/services/security-housekeeping#housekeeping',
-        subtitle: 'Page 1 - Deep Cleaning & Janitorial',
-      },
-      {
-        label: '3. Event Security & Management',
-        href: '/services/events-cultural#events',
-        subtitle: 'Page 2 - VIP Escort & 4K Photography',
-      },
-      {
-        label: '4. Cultural Programs, Drama & Dance',
-        href: '/services/events-cultural#cultural',
-        subtitle: 'Page 2 - Stage Show & Drama Production',
-      },
-      {
-        label: '5. Skill Development, Health & AI Training',
-        href: '/services/training-empowerment#training',
-        subtitle: 'Page 3 - Fire Drills & AI Workshops',
-      },
-      {
-        label: '6. Women Empowerment & Social Initiatives',
-        href: '/services/training-empowerment#women-empowerment',
-        subtitle: 'Page 3 - Lady Guarding & CSR Placement',
-      },
-      {
-        label: '7. Job Placement & Recruitment Consultancy',
-        href: '/services/recruitment-manpower#consultancy',
-        subtitle: 'Page 4 - Executive Talent Hiring',
-      },
-      {
-        label: '8. Skilled & Unskilled Manpower Supply',
-        href: '/services/recruitment-manpower#manpower',
-        subtitle: 'Page 4 - Contract Staffing & Payroll',
-      },
-      {
-        label: '9. Tour, Travel & Transportation Services',
-        href: '/services/travel-logistics#travel',
-        subtitle: 'Page 5 - Fleet Rentals & Airport Pickups',
-      },
-      {
-        label: '10. Courier, Cargo & Logistics',
-        href: '/services/travel-logistics#cargo',
-        subtitle: 'Page 5 - Express Parcels & Heavy Freight',
-      },
-      {
-        label: '11. Government & Private Tenders',
-        href: '/services/tenders-others#tenders',
-        subtitle: 'Page 6 - Uniforms & Tender Supplies',
-      },
-      {
-        label: '12. Other Specialized Corporate Solutions',
-        href: '/services/tenders-others#others',
-        subtitle: 'Page 6 - ISO Audits & Facility Setup',
-      },
+      ...[
+        'Skilled Employee Supply',
+        'Non-Skilled Labour Supply',
+        'Warehouse & Logistics Staff',
+        'Packing Staff',
+        'Scanning Staff',
+        'Manufacturing Workforce',
+        'Housekeeping Staff',
+        'Housemaid Services',
+        'Caretaker Services',
+        'Cleaner Services',
+        'Industrial Workforce',
+        'Loading & Unloading Labour',
+        'Contract Labour',
+        'Security Guards',
+      ].map((service, index) => ({
+        label: `${index + 1}. ${service}`,
+        href: '/services#home-services',
+        subtitle: 'All Manpower Services',
+      })),
     ],
   },
   { label: 'Gallery', href: '/gallery' },
@@ -104,6 +64,7 @@ export default function Navbar() {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [mobileSubmenu, setMobileSubmenu] = useState<string | null>(null);
   const pathname = usePathname();
+  const router = useRouter();
   const headerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -186,7 +147,13 @@ export default function Navbar() {
                 <button
                   type="button"
                   className="flex items-center gap-1 text-gray-200 hover:text-amber-400 transition-colors duration-200 font-medium text-sm"
-                  onClick={() => toggleDropdown(link.label)}
+                  onClick={() => {
+                    if (link.href) {
+                      router.push(link.href);
+                    } else {
+                      toggleDropdown(link.label);
+                    }
+                  }}
                   aria-haspopup="true"
                   aria-expanded={openDropdown === link.label}
                 >
@@ -268,22 +235,31 @@ export default function Navbar() {
           {navLinks.map((link) =>
             link.children ? (
               <div key={link.label}>
-                <button
-                  type="button"
-                  className="w-full flex items-center justify-between py-3 text-gray-200 hover:text-amber-400 font-medium border-b border-white/5 text-sm"
-                  onClick={() =>
-                    setMobileSubmenu((current) => (current === link.label ? null : link.label))
-                  }
-                  aria-expanded={mobileSubmenu === link.label}
-                >
-                  {link.label}
-                  <ChevronDown
-                    size={16}
-                    className={`transition-transform duration-200 ${
-                      mobileSubmenu === link.label ? 'rotate-180' : ''
-                    }`}
-                  />
-                </button>
+                <div className="flex items-center justify-between border-b border-white/5">
+                  <Link
+                    href={link.href}
+                    className="flex-1 py-3 text-gray-200 hover:text-amber-400 font-medium text-sm"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    {link.label}
+                  </Link>
+                  <button
+                    type="button"
+                    className="p-3 text-gray-200 hover:text-amber-400"
+                    onClick={() =>
+                      setMobileSubmenu((current) => (current === link.label ? null : link.label))
+                    }
+                    aria-expanded={mobileSubmenu === link.label}
+                    aria-label={`Toggle ${link.label} submenu`}
+                  >
+                    <ChevronDown
+                      size={16}
+                      className={`transition-transform duration-200 ${
+                        mobileSubmenu === link.label ? 'rotate-180' : ''
+                      }`}
+                    />
+                  </button>
+                </div>
                 {mobileSubmenu === link.label && (
                   <div className="py-1 bg-white/5 rounded-xl my-1 divide-y divide-white/5">
                     {link.children.map((child) => (

@@ -62,15 +62,16 @@ export default function About() {
             </h2>
 
             <p className="text-[14px] text-slate-600 mb-6 leading-relaxed">
-              Shakti Workforce Private Limited is a diversified business services company based in Bhiwandi, Maharashtra, offering a comprehensive suite of security, manpower, and business
-              support solutions. Our commitment to quality, professionalism, and reliable service
-              has made us a trusted partner for organizations across industries.
+              Shakti Workforce Private Limited is an all manpower service provider based in Bhiwandi,
+              Maharashtra, offering skilled, non-skilled, industrial, housekeeping, logistics, contract,
+              and security workforce services. Our commitment to quality, professionalism, and reliable
+              deployment has made us a trusted workforce partner across industries.
             </p>
 
             <p className="text-[14px] text-slate-600 mb-8 leading-relaxed">
-              From trained security personnel and expert housekeeping teams to event management,
-              training programs, and tender supplies — we deliver end-to-end solutions tailored to
-              your needs, backed by an experienced leadership team.
+              From skilled employees and factory workers to warehouse staff, packing staff, cleaners,
+              loading and unloading labour, contract labour, and trained security guards — we provide
+              dependable manpower tailored to your operational needs.
             </p>
 
             <div className="space-y-5">

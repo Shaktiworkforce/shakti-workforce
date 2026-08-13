@@ -161,7 +161,7 @@ export default function WhyChooseUs() {
               Ready to Transform Your Business Operations?
             </h3>
             <p className="text-gray-300 text-base lg:text-lg leading-relaxed">
-              Join 500+ organizations that trust Shakti Workforce Private Limited for reliable, end-to-end business solutions.
+              Join 500+ organizations that trust Shakti Workforce Private Limited for reliable manpower deployment and workforce support.
               Get a complimentary strategy session with our senior consultants.
             </p>
           </div>
@@ -171,7 +171,7 @@ export default function WhyChooseUs() {
 
 
             </a>
-            <a href="/services/security-housekeeping" className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl border-2 border-white/30 text-white font-semibold hover:bg-white/10 transition-colors text-sm whitespace-nowrap">
+            <a href="/services" className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl border-2 border-white/30 text-white font-semibold hover:bg-white/10 transition-colors text-sm whitespace-nowrap">
               Explore Services →
             </a>
           </div>

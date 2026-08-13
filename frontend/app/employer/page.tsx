@@ -21,7 +21,6 @@ import {
   HeartHandshake,
   BriefcaseBusiness,
   Drama,
-  Plane,
   PackageCheck,
   Truck,
   Briefcase,
@@ -32,18 +31,20 @@ import { buildMailtoUrl, buildWhatsAppUrl, formatInquiry } from '@/lib/contactAc
 import { SERVICE_CATEGORIES } from '@/lib/servicesData';
 
 const serviceOptions = [
-  { icon: ShieldCheck, label: 'Private Security Services' },
-  { icon: Sparkles, label: 'Housekeeping, Cleaning & Hospitality' },
-  { icon: Camera, label: 'Event Organization & Photography' },
-  { icon: GraduationCap, label: 'Health, Education & AI Training' },
-  { icon: HeartHandshake, label: 'Women Empowerment Programs' },
-  { icon: BriefcaseBusiness, label: 'Job Consultancy' },
-  { icon: Drama, label: 'Cultural Programs (Drama & Dance)' },
-  { icon: Plane, label: 'Tour & Travel Services' },
-  { icon: PackageCheck, label: 'Government & Private Tender Supplies' },
-  { icon: Truck, label: 'Courier & Cargo Services' },
-  { icon: Users, label: 'Manpower Supply' },
-  { icon: BriefcaseBusiness, label: 'Other' },
+  { icon: Users, label: 'Skilled Employee Supply' },
+  { icon: Users, label: 'Non-Skilled Labour Supply' },
+  { icon: Building2, label: 'Warehouse & Logistics Staff' },
+  { icon: PackageCheck, label: 'Packing Staff' },
+  { icon: PackageCheck, label: 'Scanning Staff' },
+  { icon: Building2, label: 'Manufacturing Workforce' },
+  { icon: Sparkles, label: 'Housekeeping Staff' },
+  { icon: Users, label: 'Housemaid Services' },
+  { icon: Users, label: 'Caretaker Services' },
+  { icon: Sparkles, label: 'Cleaner Services' },
+  { icon: Building2, label: 'Industrial Workforce' },
+  { icon: Users, label: 'Loading & Unloading Labour' },
+  { icon: Users, label: 'Contract Labour' },
+  { icon: ShieldCheck, label: 'Security Guards' },
 ];
 
 export default function EmployerPage() {
@@ -149,8 +150,9 @@ export default function EmployerPage() {
             Request a Service
           </h1>
           <p className="text-gray-600 max-w-xl mx-auto">
-            Tell us what your organization needs — security, manpower, housekeeping, or any of our
-            services. We'll prepare a customized proposal for you.
+             Tell us what your organization needs — skilled employees, non-skilled labour, industrial
+             workforce, housekeeping staff, logistics staff, contract labour, or security guards. We'll
+             prepare a customized manpower proposal for you.
           </p>
         </div>
 

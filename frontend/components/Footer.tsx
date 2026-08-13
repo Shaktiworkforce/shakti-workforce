@@ -4,7 +4,7 @@ import { Phone, Mail, MapPin, ArrowRight, Facebook, Instagram, Youtube, Twitter 
 const quickLinks = [
   { label: 'Home', href: '/' },
   { label: 'About Us', href: '/about' },
-  { label: 'Services', href: '/services/security-housekeeping' },
+  { label: 'Services', href: '/services' },
   { label: 'Photo Gallery', href: '/gallery' },
   { label: 'Why Choose Us', href: '/#why-choose-us' },
   { label: 'Contact Us', href: '/contact' },
@@ -12,12 +12,15 @@ const quickLinks = [
 ];
 
 const serviceLinks = [
-  { name: 'Private Security', href: '/services/security-housekeeping#security' },
-  { name: 'Housekeeping & Cleaning', href: '/services/security-housekeeping#housekeeping' },
-  { name: 'Event Organization', href: '/services/events-cultural#events' },
-  { name: 'Training Programs', href: '/services/training-empowerment#training' },
-  { name: 'Job Consultancy', href: '/services/recruitment-manpower#consultancy' },
-  { name: 'Courier & Cargo', href: '/services/travel-logistics#cargo' },
+  { name: 'Skilled Employee Supply', href: '/services#home-services' },
+  { name: 'Non-Skilled Labour Supply', href: '/services#home-services' },
+  { name: 'Warehouse & Logistics Staff', href: '/services#home-services' },
+  { name: 'Packing & Scanning Staff', href: '/services#home-services' },
+  { name: 'Housekeeping & Cleaning', href: '/services#home-services' },
+  { name: 'Industrial Workforce', href: '/services#home-services' },
+  { name: 'Loading & Unloading Labour', href: '/services#home-services' },
+  { name: 'Contract Labour', href: '/services#home-services' },
+  { name: 'Security Guards', href: '/services#home-services' },
 ];
 
 export default function Footer() {
@@ -39,9 +42,20 @@ export default function Footer() {
 </div>
             </div>
             <p className="text-sm leading-relaxed mb-6">
-              Your trusted partner for security, manpower, and comprehensive business solutions
+              Your trusted all manpower service provider for skilled, non-skilled, industrial, and security workforce
               across India. Service with integrity.
             </p>
+            <div className="flex flex-wrap gap-2 mb-6">
+              <span className="text-[10px] font-bold tracking-wider uppercase bg-white/10 border border-amber-400/30 text-amber-300 rounded-full px-3 py-1">
+                CLRA Licensed
+              </span>
+              <span className="text-[10px] font-bold tracking-wider uppercase bg-white/10 border border-amber-400/30 text-amber-300 rounded-full px-3 py-1">
+                PSARA Licensed
+              </span>
+              <span className="text-[10px] font-bold tracking-wider uppercase bg-white/10 border border-amber-400/30 text-amber-300 rounded-full px-3 py-1">
+                ISO 9001:2015 Certified
+              </span>
+            </div>
             <div className="flex gap-3">
               {[
                 { Icon: Instagram, href: 'https://www.instagram.com/gm_khan_baba', label: 'Instagram' },

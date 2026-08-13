@@ -25,7 +25,6 @@ import {
   HeartHandshake,
   BriefcaseBusiness,
   Drama,
-  Plane,
   PackageCheck,
   Truck,
   ChevronDown,
@@ -36,18 +35,20 @@ import { buildMailtoUrl, buildWhatsAppUrl, formatInquiry } from '@/lib/contactAc
 import { SERVICE_CATEGORIES } from '@/lib/servicesData';
 
 const serviceOptions = [
-  { icon: ShieldCheck, label: 'Private Security Services' },
-  { icon: Sparkles, label: 'Housekeeping, Cleaning & Hospitality' },
-  { icon: Camera, label: 'Event Organization & Photography' },
-  { icon: GraduationCap, label: 'Health, Education & AI Training' },
-  { icon: HeartHandshake, label: 'Women Empowerment Programs' },
-  { icon: BriefcaseBusiness, label: 'Job Consultancy' },
-  { icon: Drama, label: 'Cultural Programs (Drama & Dance)' },
-  { icon: Plane, label: 'Tour & Travel Services' },
-  { icon: PackageCheck, label: 'Government & Private Tender Supplies' },
-  { icon: Truck, label: 'Courier & Cargo Services' },
-  { icon: Users, label: 'Manpower Supply' },
-  { icon: BriefcaseBusiness, label: 'Other' },
+  { icon: Users, label: 'Skilled Employee Supply' },
+  { icon: Users, label: 'Non-Skilled Labour Supply' },
+  { icon: Building2, label: 'Warehouse & Logistics Staff' },
+  { icon: PackageCheck, label: 'Packing Staff' },
+  { icon: PackageCheck, label: 'Scanning Staff' },
+  { icon: Building2, label: 'Manufacturing Workforce' },
+  { icon: Sparkles, label: 'Housekeeping Staff' },
+  { icon: Users, label: 'Housemaid Services' },
+  { icon: Users, label: 'Caretaker Services' },
+  { icon: Sparkles, label: 'Cleaner Services' },
+  { icon: Building2, label: 'Industrial Workforce' },
+  { icon: Users, label: 'Loading & Unloading Labour' },
+  { icon: Users, label: 'Contract Labour' },
+  { icon: ShieldCheck, label: 'Security Guards' },
 ];
 
 function ApplyPortal() {
@@ -334,21 +335,20 @@ function ApplyPortal() {
                       className="w-full pl-10 pr-8 py-3 rounded-xl border border-gray-200 bg-white focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition text-sm appearance-none cursor-pointer"
                     >
                       <option value="">Select Position</option>
-                      <option value="Security Guard (Male/Female)">Security Guard (Male/Female)</option>
-                      <option value="Security Supervisor">Security Supervisor</option>
-                      <option value="Bouncer / VIP Escort">Bouncer / VIP Escort</option>
-                      <option value="Gunman">Gunman</option>
-                      <option value="Housekeeper / Cleaning Staff">Housekeeper / Cleaning Staff</option>
-                      <option value="Pantry Boy / Office Peon">Pantry Boy / Office Peon</option>
-                      <option value="Gardener">Gardener</option>
-                      <option value="Skilled Trades (Plumber/Carpenter/Electrician/Painter/AC)">Skilled Trades (Plumber/Carpenter/Electrician/Painter/AC)</option>
-                      <option value="Nurse / Wardboy / Caretaker">Nurse / Wardboy / Caretaker</option>
-                      <option value="Teacher / AI & Technical Trainer">Teacher / AI & Technical Trainer</option>
-                      <option value="Driver (Cab/Bus/Logistics)">Driver (Cab/Bus/Logistics)</option>
-                      <option value="Logistics Staff / Delivery Executive">Logistics Staff / Delivery Executive</option>
-                      <option value="Office / Back Office Staff">Office / Back Office Staff</option>
-                      <option value="Mason / Construction Labour">Mason / Construction Labour</option>
-                      <option value="Event & Cultural Staff">Event & Cultural Staff</option>
+                      <option value="Skilled Employee Supply">Skilled Employee Supply</option>
+                      <option value="Non-Skilled Labour Supply">Non-Skilled Labour Supply</option>
+                      <option value="Warehouse & Logistics Staff">Warehouse & Logistics Staff</option>
+                      <option value="Packing Staff">Packing Staff</option>
+                      <option value="Scanning Staff">Scanning Staff</option>
+                      <option value="Manufacturing Workforce">Manufacturing Workforce</option>
+                      <option value="Housekeeping Staff">Housekeeping Staff</option>
+                      <option value="Housemaid Services">Housemaid Services</option>
+                      <option value="Caretaker Services">Caretaker Services</option>
+                      <option value="Cleaner Services">Cleaner Services</option>
+                      <option value="Industrial Workforce">Industrial Workforce</option>
+                      <option value="Loading & Unloading Labour">Loading & Unloading Labour</option>
+                      <option value="Contract Labour">Contract Labour</option>
+                      <option value="Security Guards">Security Guards</option>
                       <option value="Other">Other</option>
                     </select>
                     <ChevronDown size={18} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
