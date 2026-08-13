@@ -93,10 +93,11 @@ export default function Hero() {
           {/* Responsive Feature pills grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3 max-w-2xl">
             {[
-              { icon: Shield, label: 'PSARA Trained Guards' },
-              { icon: Users2, label: 'Verified Staffing' },
-              { icon: Briefcase, label: '24/7 Rapid Response' },
               { icon: ShieldCheck, label: 'CLRA Licensed' },
+              { icon: Shield, label: 'PSARA Trained Guards' },
+              { icon: Users2, label: 'Manpower' },
+              { icon: Shield, label: 'Security' },
+              { icon: Briefcase, label: '24/7 Rapid Response' },
             ].map((item) => (
               <div
                 key={item.label}
