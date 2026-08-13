@@ -48,14 +48,7 @@ const navLinks: NavLink[] = [
   },
   { label: 'Gallery', href: '/gallery' },
   { label: 'Contact Us', href: '/contact' },
-  {
-    label: 'Portal / Apply',
-    href: '/apply',
-    children: [
-      { label: 'Job Application (Employee)', href: '/apply?type=employee', subtitle: '' },
-      { label: 'Service Request (Employer)', href: '/apply?type=employer', subtitle: '' },
-    ],
-  },
+  { label: 'Service Request', href: '/apply' },
 ];
 
 export default function Navbar() {
