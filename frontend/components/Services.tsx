@@ -3,6 +3,7 @@
 import {
   Boxes,
   Building2,
+  CarFront,
   Factory,
   HardHat,
   Home,
@@ -27,6 +28,7 @@ const services = [
   { icon: Building2, title: 'Industrial Workforce', desc: 'Flexible industrial manpower for plants, factories, production units, and large operational sites.', img: 'skill2.jpeg' },
   { icon: HardHat, title: 'Loading & Unloading Labour', desc: 'Loading and unloading labour for warehouses, factories, transport operations, and material handling.', img: 'Loading & Unloading Labour.png' },
   { icon: HardHat, title: 'Contract Labour', desc: 'Contract labour deployment tailored to project, site, factory, and workforce requirements.', img: 'skill4.jpeg' },
+  { icon: CarFront, title: 'Professional Driver', desc: 'Professional drivers for personal, commercial, logistics, and organizational transportation requirements.', img: 'Professional driver.png' },
   { icon: ShieldCheck, title: 'Security Guards', desc: 'Trained and verified security guards for residential, commercial, industrial, and institutional premises.', img: 'Private_Security.jpeg' },
 ];
 

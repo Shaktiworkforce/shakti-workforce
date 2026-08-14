@@ -20,6 +20,7 @@ const serviceLinks = [
   { name: 'Industrial Workforce', href: '/services#home-services' },
   { name: 'Loading & Unloading Labour', href: '/services#home-services' },
   { name: 'Contract Labour', href: '/services#home-services' },
+  { name: 'Professional Driver', href: '/services#home-services' },
   { name: 'Security Guards', href: '/services#home-services' },
 ];
 

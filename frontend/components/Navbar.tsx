@@ -38,6 +38,7 @@ const navLinks: NavLink[] = [
         'Industrial Workforce',
         'Loading & Unloading Labour',
         'Contract Labour',
+        'Professional Driver',
         'Security Guards',
       ].map((service, index) => ({
         label: `${index + 1}. ${service}`,
