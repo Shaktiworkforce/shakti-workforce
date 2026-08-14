@@ -59,17 +59,17 @@ export default function Hero() {
 
           {/* Responsive Heading */}
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[52px] font-extrabold text-white leading-[1.18] sm:leading-[1.15] mb-4 sm:mb-6 tracking-tight">
-            Your Trusted Partner for{' '}
+            Your Trusted Partner For{' '}
             <span className="text-amber-400 font-extrabold block sm:inline">
-              Manpower, Security &
+              Logistics Manpower Supply, Security Guards, &
             </span>{' '}
               Workforce Solutions
           </h1>
 
           {/* Responsive Subtitle */}
           <p className="text-sm sm:text-base md:text-lg text-gray-200 mb-6 sm:mb-8 leading-relaxed max-w-xl">
-            Shakti Workforce Private Limited delivers 100% verified security guarding, qualified{' '}
-            <span className="text-amber-400 font-semibold">manpower</span>, housekeeping, and operational
+            Shakti Workforce Private Limited delivers 100% verified Manpower, Security guarding, Qualified
+            housekeeping, and Operational
             support built on integrity, discipline, and trust.
           </p>
 

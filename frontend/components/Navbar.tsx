@@ -123,7 +123,7 @@ export default function Navbar() {
               <span className="block truncate">Private Limited</span>
             </div>
             <div className="text-amber-200 text-[8px] sm:text-[9px] tracking-[0.16em] font-semibold">
-              SERVICE WITH INTEGRITY
+              RELIABLE WORKFORCE SOLUTION ACROSS INDIA
             </div>
           </div>
         </Link>
