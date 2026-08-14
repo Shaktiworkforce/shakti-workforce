@@ -110,12 +110,12 @@ export default function Navbar() {
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between gap-4">
         <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group min-w-0 shrink-0">
-          <span className="flex h-14 w-14 sm:h-16 sm:w-16 md:h-[72px] md:w-[72px] shrink-0 overflow-hidden rounded-full drop-shadow-[0_2px_8px_rgba(0,0,0,0.32)]">
+          <span className="flex h-14 w-14 sm:h-16 sm:w-16 md:h-[72px] md:w-[72px] shrink-0 drop-shadow-[0_2px_8px_rgba(0,0,0,0.32)]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/logo.png"
               alt="Shakti Workforce Logo"
-              className="h-full w-full object-cover object-[center_45%] transition-transform duration-300 group-hover:scale-105"
+              className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-105"
             />
           </span>
           <div className="min-w-0">
